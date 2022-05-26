@@ -10,7 +10,11 @@ var usersRouter = require('./routes/users');
 var eployeeRouter = require('./routes/employee');
 var jsonParser = bodyParser.json()
 
+var path = require('path');
+
 var app = express();
+
+global.appRoot = path.resolve(__dirname);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

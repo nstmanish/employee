@@ -7,7 +7,7 @@ const fs = require('fs');
 /* POST Add Employee | Done */
 router.post('/new', function(req, res, next) {
  
-  let rawData = fs.readFileSync('./employee.json');
+  let rawData = fs.readFileSync(appRoot+'/employee.json');
   let employees = JSON.parse(rawData);
   let updateRecord = true;
   let employeeIds = [];
@@ -36,7 +36,7 @@ router.post('/new', function(req, res, next) {
   });
 
   let data = JSON.stringify(employees);
-  fs.writeFileSync('./employee.json', data);
+  fs.writeFileSync(appRoot+'/employee.json', data);
 
   res.send( "New Employee Added" )
 
@@ -45,7 +45,7 @@ router.post('/new', function(req, res, next) {
 /* GET All Employee | Done */
 router.get('/employeeList', function(req, res, next) {
 
-  let rawData = fs.readFileSync('./employee.json');
+  let rawData = fs.readFileSync(appRoot+'/employee.json');
   let employees = JSON.parse(rawData);
 
   res.send(employees);
@@ -55,7 +55,7 @@ router.get('/employeeList', function(req, res, next) {
 /* GET Employee by Id. | Done */
 router.get('/detail/:employeeId', function(req, res, next) {
 
-  let rawData = fs.readFileSync('./employee.json');
+  let rawData = fs.readFileSync(appRoot+'/employee.json');
   let employees = JSON.parse(rawData);
 
   for (let employeeNumber in employees)
@@ -73,7 +73,7 @@ router.get('/detail/:employeeId', function(req, res, next) {
 /* UPATE Employee Detail. | Partial Done*/
 router.put('/update/:employeeId', function(req, res, next) {
   
-  let rawData = fs.readFileSync('./employee.json');
+  let rawData = fs.readFileSync(appRoot+'/employee.json');
   let employees = JSON.parse(rawData);
 
   for (let employeeNumber in employees)
@@ -89,7 +89,7 @@ router.put('/update/:employeeId', function(req, res, next) {
       employees[employeeNumber].Salary  = req.body.Salary;
 
       let updatedData = JSON.stringify(employees);
-      fs.writeFileSync('./employee.json', updatedData);
+      fs.writeFileSync(appRoot+'/employee.json', updatedData);
     
       res.send("record Updated");
 
@@ -106,7 +106,7 @@ router.put('/update/:employeeId', function(req, res, next) {
 router.delete('/delete/:employeeId', function(req, res, next) {
 
   let dataArray = [];
-  let rawData = fs.readFileSync('./employee.json');
+  let rawData = fs.readFileSync(appRoot+'/employee.json');
   let employees = JSON.parse(rawData);
 
   for (let employeeNumber in employees)
@@ -118,7 +118,7 @@ router.delete('/delete/:employeeId', function(req, res, next) {
   }
 
   let data = JSON.stringify(dataArray);
-  fs.writeFileSync('./employee.json', data);
+  fs.writeFileSync(appRoot+'/employee.json', data);
 
   if (dataArray.length != Object.keys(employees).length)
   {
@@ -131,7 +131,7 @@ router.delete('/delete/:employeeId', function(req, res, next) {
 /* FETCH fetch employees whos salary is less than 5000 | Done */
 router.get('/salary/:lessThan', function(req, res, next) {
  
-  let rawData = fs.readFileSync('./employee.json');
+  let rawData = fs.readFileSync(appRoot+'/employee.json');
   let employees = JSON.parse(rawData);
 
   let dataArray = [];
@@ -148,7 +148,7 @@ router.get('/salary/:lessThan', function(req, res, next) {
   {
     res.send(dataArray);
   }
-  
+
   res.send({ "message" : "No Data Found"});
 
 });
