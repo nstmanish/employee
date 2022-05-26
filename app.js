@@ -1,24 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser')
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var eployeeRouter = require('./routes/employee');
-var jsonParser = bodyParser.json()
+const eployeeRouter = require('./routes/employee');
+const jsonParser = bodyParser.json();
 
-var path = require('path');
 
-var app = express();
+const app = express();
 
 global.appRoot = path.resolve(__dirname);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,8 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(jsonParser);
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 app.use('/employee', eployeeRouter);
 
 // catch 404 and forward to error han// catch 404 and forward to error handlerdler
