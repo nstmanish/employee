@@ -25,10 +25,8 @@ router.post('/new', function(req, res, next) {
   
   employeeIds.sort().reverse();
 
-  console.log(employeeIds);
-
   employees.push({
-    "empId"   : (employeeIds[0] != null ? employeeIds[0] : 0 ) + 1, 
+    "empId"   : (employeeIds[0] != null ? parseInt(employeeIds[0]) : 0 ) + 1, 
     "empName" : req.body.empName,  
     "empdept" : req.body.empdept,
     "mobile"  : req.body.mobile,
@@ -40,7 +38,7 @@ router.post('/new', function(req, res, next) {
   let data = JSON.stringify(employees);
   fs.writeFileSync('./employee.json', data);
 
-  res.send( employees )
+  res.send( "New Employee Added" )
 
 });
 
@@ -89,13 +87,18 @@ router.put('/update/:employeeId', function(req, res, next) {
       employees[employeeNumber].email   = req.body.email;
       employees[employeeNumber].role    = req.body.role;
       employees[employeeNumber].Salary  = req.body.Salary;
+
+      let updatedData = JSON.stringify(employees);
+      fs.writeFileSync('./employee.json', updatedData);
+    
+      res.send("record Updated");
+
     }
+
   }
 
-  let updatedData = JSON.stringify(employees);
-  fs.writeFileSync('./employee.json', updatedData);
-
-  res.send("record Updated");
+  res.send("record No Found !");
+ 
 
 });
 
@@ -117,7 +120,11 @@ router.delete('/delete/:employeeId', function(req, res, next) {
   let data = JSON.stringify(dataArray);
   fs.writeFileSync('./employee.json', data);
 
-  res.send("record deleted");
+  if (dataArray.length != Object.keys(employees).length)
+  {
+    res.send("record deleted");
+  }
+  res.send("record Not Found");
 
 });
 
@@ -137,7 +144,12 @@ router.get('/salary/:lessThan', function(req, res, next) {
     }
   }
 
-  res.send(dataArray);
+  if (dataArray.length > 0)
+  {
+    res.send(dataArray);
+  }
+  
+  res.send({ "message" : "No Data Found"});
 
 });
 
